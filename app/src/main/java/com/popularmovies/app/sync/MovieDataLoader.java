@@ -93,12 +93,16 @@ public class MovieDataLoader {
         BufferedReader reader = null;
 
         try {
-            final String MOVIES_BASE_URL = "http://api.themoviedb.org/3/discover/movie?";
+             String MOVIES_BASE_URL = "http://api.themoviedb.org/3/movie/popular?";
             final String SORT_BY_PARAM = "sort_by";
             final String API_KEY_PARAM = "api_key";
-
+            if (mSortByParamValue != null && mSortByParamValue.equals("popularity.desc")) {
+                MOVIES_BASE_URL = "http://api.themoviedb.org/3/movie/popular?";
+            } else if (mSortByParamValue != null && mSortByParamValue.equals("vote_average.desc")) {
+                MOVIES_BASE_URL = "http://api.themoviedb.org/3/movie/top_rated?";
+            }
             Uri builtUri = Uri.parse(MOVIES_BASE_URL).buildUpon()
-                    .appendQueryParameter(SORT_BY_PARAM, mSortByParamValue)
+
                     .appendQueryParameter(API_KEY_PARAM, Utility.API_KEY)
                     .build();
 
